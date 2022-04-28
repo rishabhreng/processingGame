@@ -1,7 +1,7 @@
-public class Mover {
+public class GamePiece {
   private float xpos, ypos;
 
-  public Mover(float m_xpos, float m_ypos) {
+  public GamePiece(float m_xpos, float m_ypos) {
     xpos = m_xpos;
     ypos = m_ypos;
   }
@@ -12,7 +12,7 @@ public class Mover {
     fill(0);
   }
 
-  //should be a factor of 20
+  //should be a factor of 20, or in general, grid "pixel" size
   public void move(float x, float y) {
     xpos+=x;
     ypos+=y;
@@ -25,5 +25,12 @@ public class Mover {
   
   public float getY() {
     return ypos;
+  }
+  
+  public void checkSideCollision() {
+    if (xpos >= width) move(-width, 0);
+    if (xpos < 0) move(width, 0);
+    if (ypos >= height) move(0,-height);
+    if (ypos < 0) move(0, height);
   }
 }

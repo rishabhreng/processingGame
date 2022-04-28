@@ -1,4 +1,4 @@
-public class Enemy extends Mover {
+public class Enemy extends GamePiece {
   private color enemyColor = #FF0000;
   
   public Enemy(float xpos,float ypos) {
@@ -8,7 +8,5 @@ public class Enemy extends Mover {
   public void display() {
     super.display(enemyColor);
   }
-  
-  
   
 }
