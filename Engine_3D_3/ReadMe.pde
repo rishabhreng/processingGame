@@ -51,5 +51,12 @@ scene
 
 test_code
   Simply a collection of legacy code in case it is needed later.
+  
+Other useful information
+  In this program, the x-axis is horizontal and points to the right, the y-axis is vertical and points upward, and the z-axis points directly into the screen.
+  There are a few notes in the Engine_3d_3.PDE file
+  Cumulative rotation mode allows Object objects to accumulate rotation over several frames and is a boolean tied to the specific objects, not a global.
+  The textured mode is currently a globel boolean.
+  The textures of the faces are stored in one image file to reduce the number of images which have to be loaded at the start of the program.
 
 */
