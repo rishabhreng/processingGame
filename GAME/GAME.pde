@@ -1,9 +1,11 @@
 //player vs enemy (blue vs red) in which enemy follows you every step you make, as u move toward a goal spot (like a coin)
 Player player = new Player(100, 100);
 Enemy enemy = new Enemy(300, 300);
-Coin coin = new Coin(200,200);
+Coin coin = new Coin(200, 200);
+ArrayList<Wall> wallArr = new ArrayList<Wall>();
 PFont font;
 
+int numWalls = 20; //change
 void setup() {
   size(400, 400);
   background(255);
@@ -11,18 +13,79 @@ void setup() {
   textAlign(CENTER);
   font = loadFont("Impact-48.vlw");
   textFont(font, 48);
+  determineWallPos(numWalls); //<>// //<>//
 }
 
 void draw() {
   background(255);
   grid();
+
+  for (Wall wall : wallArr) {
+    wall.display();
+  }
   player.display();
   enemy.display();
   coin.display();
   player.checkSideCollision();
   enemy.checkSideCollision();
+  enemyMove();
 
-//randomly-moving enemy, not AI
+
+  //checks for win/lose and displays appropriate screen
+  checkScreen();
+}
+
+void determineWallPos(int wallNum) {
+  ArrayList<Integer>X = new ArrayList<Integer>();
+  ArrayList<Integer>Y = new ArrayList<Integer>();
+  wallNum = numWalls;
+
+  for (int i = 0; i < wallNum; i++) {
+    int x = chooseNum("x");
+    X.add(i, x);
+    while (moreThanOnce(X, x)) {
+      x = chooseNum("x");
+      X.set(i,x);
+    }
+    int y = chooseNum("y");
+    Y.add(i, y);
+  
+    while (moreThanOnce(Y, y)) {
+      y = chooseNum("y");
+      Y.set(i,y);
+    }
+
+    wallArr.add(new Wall(x, y));
+   //println("(" + x + ", " + y + ")");
+  }
+}
+
+int chooseNum(String xOrY) {
+  if (xOrY.equals("x")) {
+    int x = (int) (Math.random() * (width));
+    while (x%20!=0) x = (int) (Math.random() * (width));
+    return x;
+  }
+  if (xOrY.equals("y")) {
+    int y = (int) (Math.random() * (height));
+    while (y%20!=0) y = (int) (Math.random() * (height));
+    return y;
+  }
+  else return 0;
+}
+
+boolean moreThanOnce(ArrayList<Integer> list, int searched) {
+  int numCount = 0;
+
+  for (int thisNum : list) {
+    if (thisNum == searched) numCount++;
+  }
+
+  return numCount > 1;
+}
+
+void enemyMove() {
+  //randomly-moving enemy, not AI
   int enemyMove = (int) (Math.random() * 4);
   if (frameCount%20==0) {
     switch (enemyMove) {
@@ -40,9 +103,6 @@ void draw() {
       break;
     }
   }
-  
-  //checks for win/lose and displays appropriate screen
-  checkScreen();
 }
 
 void checkScreen() {
@@ -53,16 +113,16 @@ void checkScreen() {
 }
 
 void winScreen() {
-      noLoop();
-      background(255);
-      text("YOU WIN", width/2, height/2);
-  }
+  noLoop();
+  background(255);
+  text("YOU WIN", width/2, height/2);
+}
 
 void loseScreen() {
   noLoop();
   background(255);
   text("GAME OVER", width/2, height/2);
-  }
+}
 
 void grid() {
   int grid=20;

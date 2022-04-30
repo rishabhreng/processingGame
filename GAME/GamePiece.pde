@@ -33,4 +33,6 @@ public class GamePiece {
     if (ypos >= height) move(0,-height);
     if (ypos < 0) move(0, height);
   }
+  
+  
 }
