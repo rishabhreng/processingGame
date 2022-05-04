@@ -4,19 +4,52 @@ Enemy enemy = new Enemy(300, 300);
 Coin coin = new Coin(200, 200);
 ArrayList<Wall> wallArr = new ArrayList<Wall>();
 PFont font;
+int mode = 0;
+
+PImage img1;
 
 int numWalls = 20; //change
 void setup() {
-  size(400, 400);
+  size(600, 600);
   background(255);
   stroke(1);
   textAlign(CENTER);
   font = loadFont("Impact-48.vlw");
   textFont(font, 48);
-  determineWallPos(numWalls); //<>// //<>//
+  determineWallPos(numWalls);
+  
+  img1 = loadImage("STARTSCREEN.png");
 }
 
 void draw() {
+
+  //checks for win/lose and displays appropriate screen
+  checkScreen(); //<>//
+  
+}
+
+
+
+void checkScreen() {
+  if (player.getX() == enemy.getX() && player.getY() == enemy.getY())
+    mode = 2;
+  if (player.getX() == coin.getX() && player.getY() == coin.getY())
+    mode = 3;
+    
+    
+  switch (mode) {
+    case 0:
+    startScreen();
+    break;
+  }
+}
+
+void startScreen() {
+  noLoop();
+  image(img1,0,0);
+}
+
+void playScreen() {
   background(255);
   grid();
 
@@ -29,11 +62,10 @@ void draw() {
   player.checkSideCollision();
   enemy.checkSideCollision();
   enemyMove();
-
-
-  //checks for win/lose and displays appropriate screen
-  checkScreen();
 }
+
+
+
 
 void determineWallPos(int wallNum) {
   ArrayList<Integer>X = new ArrayList<Integer>();
@@ -105,12 +137,7 @@ void enemyMove() {
   }
 }
 
-void checkScreen() {
-  if (player.getX() == enemy.getX() && player.getY() == enemy.getY())
-    loseScreen();
-  if (player.getX() == coin.getX() && player.getY() == coin.getY())
-    winScreen();
-}
+
 
 void winScreen() {
   noLoop();
@@ -134,6 +161,7 @@ void grid() {
   }
 }
 
+
 void keyPressed() {
   if (key == CODED) {
     switch (keyCode) {
@@ -151,4 +179,9 @@ void keyPressed() {
       break;
     }
   }
+}
+
+
+void mousePressed() {
+println(mouseX + ", " + mouseY);
 }
