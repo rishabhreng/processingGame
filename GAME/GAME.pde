@@ -1,4 +1,4 @@
-//player vs enemy (blue vs red) in which enemy follows you every step you make, as u move toward a goal spot (like a coin)
+//player vs enemy (blue vs red) in which enemy follows you every step you make, as u move toward a goal spot (like a coin) //<>//
 Player player = new Player(100, 100);
 Enemy enemy = new Enemy(300, 300);
 Coin coin = new Coin(200, 200);
@@ -7,6 +7,7 @@ PFont font;
 int mode = 0;
 
 PImage img1;
+PImage img2;
 
 int numWalls = 20; //change
 void setup() {
@@ -17,36 +18,63 @@ void setup() {
   font = loadFont("Impact-48.vlw");
   textFont(font, 48);
   determineWallPos(numWalls);
-  
+
   img1 = loadImage("STARTSCREEN.png");
+  img2 = loadImage("PAUSESCREEN.png");
 }
 
 void draw() {
 
   //checks for win/lose and displays appropriate screen
-  checkScreen(); //<>//
-  
+  checkScreen();
 }
 
 
+void winScreen() {
+  noLoop();
+  background(255);
+  text("YOU WIN", width/2, height/2);
+}
 
+void loseScreen() {
+  noLoop();
+  background(255);
+  text("GAME OVER", width/2, height/2);
+}
 void checkScreen() {
   if (player.getX() == enemy.getX() && player.getY() == enemy.getY())
     mode = 2;
   if (player.getX() == coin.getX() && player.getY() == coin.getY())
     mode = 3;
-    
-    
+
   switch (mode) {
-    case 0:
+  case 0:
+    startScreen();
+    break;
+  case 1:
+    playScreen();
+    break;
+  case 2:
+    pauseScreen();
+    break;
+  case 3:
+    winScreen();
+    break;
+  case 4:
+    loseScreen();
+    break;
+  default: 
     startScreen();
     break;
   }
 }
 
 void startScreen() {
-  noLoop();
-  image(img1,0,0);
+  image(img1, 0, 0);
+}
+
+void pauseScreen() {
+  image(img2, 0, 0);
 }
 
 void playScreen() {
@@ -64,9 +92,6 @@ void playScreen() {
   enemyMove();
 }
 
-
-
-
 void determineWallPos(int wallNum) {
   ArrayList<Integer>X = new ArrayList<Integer>();
   ArrayList<Integer>Y = new ArrayList<Integer>();
@@ -77,18 +102,18 @@ void determineWallPos(int wallNum) {
     X.add(i, x);
     while (moreThanOnce(X, x)) {
       x = chooseNum("x");
-      X.set(i,x);
+      X.set(i, x);
     }
     int y = chooseNum("y");
     Y.add(i, y);
-  
+
     while (moreThanOnce(Y, y)) {
       y = chooseNum("y");
-      Y.set(i,y);
+      Y.set(i, y);
     }
 
     wallArr.add(new Wall(x, y));
-   //println("(" + x + ", " + y + ")");
+    //println("(" + x + ", " + y + ")");
   }
 }
 
@@ -102,8 +127,7 @@ int chooseNum(String xOrY) {
     int y = (int) (Math.random() * (height));
     while (y%20!=0) y = (int) (Math.random() * (height));
     return y;
-  }
-  else return 0;
+  } else return 0;
 }
 
 boolean moreThanOnce(ArrayList<Integer> list, int searched) {
@@ -137,20 +161,6 @@ void enemyMove() {
   }
 }
 
-
-
-void winScreen() {
-  noLoop();
-  background(255);
-  text("YOU WIN", width/2, height/2);
-}
-
-void loseScreen() {
-  noLoop();
-  background(255);
-  text("GAME OVER", width/2, height/2);
-}
-
 void grid() {
   int grid=20;
   for (int i = 0; i < width; i+=grid) {
@@ -179,9 +189,16 @@ void keyPressed() {
       break;
     }
   }
+  else if (key == 'p' && mode == 1) mode = 2; 
 }
 
 
 void mousePressed() {
-println(mouseX + ", " + mouseY);
+  println(mouseX + ", " + mouseY);
+  if (mode == 0) {
+    if ((mouseX > 120 && mouseX < 480) && (mouseY > 220 && mouseY <330)) mode = 1;
+  }
+  else if (mode == 2) {
+    if ((mouseX > 120 && mouseX < 480) && (mouseY > 220 && mouseY <330)) mode = 1;
+  }
 }
