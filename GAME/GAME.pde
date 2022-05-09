@@ -1,4 +1,5 @@
 //player vs enemy (blue vs red) in which enemy follows you every step you make, as u move toward a goal spot (like a coin) //<>//
+//TODO add ways to get to SETTINGS,WIN,and LOSESCREENS
 Player player = new Player(100, 100);
 Enemy enemy = new Enemy(300, 300);
 Coin coin = new Coin(200, 200);
@@ -6,8 +7,7 @@ ArrayList<Wall> wallArr = new ArrayList<Wall>();
 PFont font;
 int mode = 0;
 
-PImage img1;
-PImage img2;
+PImage STARTSCREEN, PAUSESCREEN, SETTINGSCREEN, WINSCREEN, LOSESCREEN;
 
 int numWalls = 20; //change
 void setup() {
@@ -19,8 +19,11 @@ void setup() {
   textFont(font, 48);
   determineWallPos(numWalls);
 
-  img1 = loadImage("STARTSCREEN.png");
-  img2 = loadImage("PAUSESCREEN.png");
+  STARTSCREEN = loadImage("STARTSCREEN.png");
+  PAUSESCREEN = loadImage("PAUSESCREEN.png");
+  SETTINGSCREEN = loadImage("SETTINGSCREEN.png");
+  WINSCREEN = loadImage("WINSCREEN.png");
+  LOSESCREEN = loadImage("LOSESCREEN.png");
 }
 
 void draw() {
@@ -70,11 +73,11 @@ void checkScreen() {
 }
 
 void startScreen() {
-  image(img1, 0, 0);
+  image(STARTSCREEN, 0, 0);
 }
 
 void pauseScreen() {
-  image(img2, 0, 0);
+  image(PAUSESCREEN, 0, 0);
 }
 
 void playScreen() {
@@ -196,9 +199,9 @@ void keyPressed() {
 void mousePressed() {
   println(mouseX + ", " + mouseY);
   if (mode == 0) {
-    if ((mouseX > 120 && mouseX < 480) && (mouseY > 220 && mouseY <330)) mode = 1;
+    if ((mouseX > 105 && mouseX < 485) && (mouseY > 215 && mouseY <380)) mode = 1;
   }
   else if (mode == 2) {
-    if ((mouseX > 120 && mouseX < 480) && (mouseY > 220 && mouseY <330)) mode = 1;
+    if ((mouseX > 55 && mouseX < 540) && (mouseY > 235 && mouseY <350)) mode = 1;
   }
 }
