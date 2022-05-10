@@ -1,7 +1,7 @@
 public class Enemy extends GamePiece {
   private color enemyColor = #FF0000;
   
-  public Enemy(float xpos,float ypos) {
+  public Enemy(int xpos,int ypos) {
     super(xpos, ypos);
   }
   

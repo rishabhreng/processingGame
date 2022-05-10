@@ -3,7 +3,7 @@
 Player player = new Player(100, 100);
 Enemy enemy = new Enemy(300, 300);
 Coin coin = new Coin(200, 200);
-
+ArrayList<Wall> wallArr = new ArrayList<Wall>();
 PFont font;
 String mode = "STARTSCREEN";
 
@@ -17,14 +17,35 @@ void setup() {
   textAlign(CENTER);
   font = loadFont("Impact-48.vlw");
   textFont(font, 48);
-  determineWallPos(numWalls);
 
   STARTSCREEN = loadImage("STARTSCREEN.png");
   PAUSESCREEN = loadImage("PAUSESCREEN.png");
   SETTINGSCREEN = loadImage("SETTINGSCREEN.png");
   WINSCREEN = loadImage("WINSCREEN.png");
   LOSESCREEN = loadImage("LOSESCREEN.png");
+  
+  //horizontal walls
+  int index=0;
+  for(int x=0;x<gridX;x++){
+    for(int y=0;y<gridY-1;y++){
+      walls[index]=new Wall(x, y, true);
+      index++;
+    }
+  }
+  //vertical walls
+  for(int x=0;x<gridX-1;x++){
+   for(int y=0;y<gridY;y++){
+    walls[index]=new Wall(x, y, false);
+    index++;
+   }
+  }
+  for(Wall wall:walls){
+   wall.randomize(); 
+  }
+  accessibleSquares.add(new int[] {0, 0});
+  generateMaze();
 }
+ 
 
 void draw() {
   //checks for win/lose and displays appropriate screen

@@ -1,7 +1,7 @@
 public class GamePiece {
-  private float xpos, ypos;
+  private int xpos, ypos;
 
-  public GamePiece(float m_xpos, float m_ypos) {
+  public GamePiece(int m_xpos, int m_ypos) {
     xpos = m_xpos;
     ypos = m_ypos;
   }
@@ -13,18 +13,26 @@ public class GamePiece {
   }
 
   //should be a factor of 20, or in general, grid "pixel" size
-  public void move(float x, float y) {
+  public void move(int x, int y) {
     xpos+=x;
     ypos+=y;
     display(0);
   }
 
-  public float getX() {
+  public int getX() {
     return xpos;
   }
   
-  public float getY() {
+  public int getY() {
     return ypos;
+  }
+  
+   public void setX(int x){
+   xpos=x; 
+  }
+  
+  public void setY(int y){
+   ypos=y; 
   }
   
   public void checkSideCollision() {
