@@ -9,3 +9,20 @@ public class Player extends GamePiece {
     super.display(playerColor);
   }
 }
+
+void playerMove() {
+  switch (keyCode) {
+  case UP:
+    player.move(0, -20);
+    break;
+  case DOWN:
+    player.move(0, 20);
+    break;
+  case LEFT:
+    player.move(-20, 0);
+    break;
+  case RIGHT:
+    player.move(20, 0);
+    break;
+  }
+}
