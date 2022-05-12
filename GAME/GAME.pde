@@ -1,11 +1,16 @@
-//player vs enemy (blue vs red) in which enemy follows you every step you make, as u move toward a goal spot (like a coin) //<>// //<>//
+import processing.sound.*; //<>//
+
+//player vs enemy (blue vs red) in which enemy follows you every step you make, as u move toward a goal spot (like a coin) //<>//
 //TODO add ways to get to SETTINGS,WIN,and LOSESCREENS
-Player player = new Player(100, 100);
+Player player = new Player(80, 100);
 Enemy enemy = new Enemy(300, 300);
 Coin coin = new Coin(200, 200);
 ArrayList<Wall> wallArr = new ArrayList<Wall>();
 PFont font;
 String mode = "STARTSCREEN";
+SoundFile playScreenSound;
+
+
 
 PImage STARTSCREEN, PAUSESCREEN, SETTINGSCREEN, WINSCREEN, LOSESCREEN;
 

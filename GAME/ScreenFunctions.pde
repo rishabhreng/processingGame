@@ -46,8 +46,8 @@ void startScreen() {
 
 void playScreen() {
   background(255);
-  grid();
   graph();
+  grid();
   player.display();
   enemy.display();
   coin.display();
