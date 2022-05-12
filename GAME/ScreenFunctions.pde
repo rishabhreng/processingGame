@@ -1,3 +1,14 @@
+//not a class, just organized functions
+void grid() {
+  int grid=20;
+  for (int i = 0; i < width; i+=grid) {
+    line (i, 0, i, height);
+  }
+  for (int i = 0; i < height; i+=grid) {
+    line (0, i, width, i);
+  }
+}
+
 void checkScreen() {
   if (player.getX() == enemy.getX() && player.getY() == enemy.getY())
     mode = "LOSESCREEN";
@@ -36,7 +47,7 @@ void startScreen() {
 void playScreen() {
   background(255);
   grid();
-  
+  graph();
   player.display();
   enemy.display();
   coin.display();
@@ -48,9 +59,7 @@ void playScreen() {
   
   player.checkSideCollision();
   enemy.checkSideCollision();
-
-
-}
+  }
 
 void pauseScreen() {
   image(PAUSESCREEN, 0, 0);

@@ -35,6 +35,7 @@ public class GamePiece {
    ypos=y; 
   }
   
+  //if a gamepiece moves past any of the sides of the screen, move it to opposite side
   public void checkSideCollision() {
     if (xpos >= width) move(-width, 0);
     if (xpos < 0) move(width, 0);

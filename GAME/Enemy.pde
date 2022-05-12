@@ -8,7 +8,6 @@ public class Enemy extends GamePiece {
   public void display() {
     super.display(enemyColor);
   }
-  
 }
 
 void enemyMove() {

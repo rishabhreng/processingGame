@@ -11,26 +11,33 @@ public class Player extends GamePiece {
   }
   
   public void checkWallCollision(){
-    ////find the wall the player is on if possible
-    //if((player.getX()/20+1)%3==0){//vetrical wall collision
-    //  if(getWall((player.getX()-40)/60, player.getY()/60, true).graphed==true){
-    //    super.setX(prevX);
-    //    super.setY(prevY);
-    //  }
-    //}else if((player.getY()/20+1)%3==0){//horizontal wall collision
-    //  if(getWall(player.getX()/60, (player.getY()-40)/60, false).graphed==true){
-    //    super.setX(prevX);
-    //    super.setY(prevY);
-    //  }
-    //}
+    //find the wall the player is on if possible
+    if (getWall((player.getX()-40)/60, player.getY()/60, true) == null) return;
+    if(getWall(player.getX()/60, (player.getY()-40)/60, false) == null)  return;
+    
+    if((player.getX()/20+1)%3==0){//vertical wall collision
+      if(getWall((player.getX()-40)/60, player.getY()/60, true).isGraphed()){
+        super.setX(prevX);
+        super.setY(prevY);
+      }
+    }
+    
+    else if((player.getY()/20+1)%3==0){//horizontal wall collision
+      if(getWall(player.getX()/60, (player.getY()-40)/60, false).isGraphed()){
+        super.setX(prevX);
+        super.setY(prevY);
+      }
+    }
   }
   
   public void updatePrevPos() {
    prevX=super.getX();
    prevY=super.getY();
+   println(prevX + ", " + prevY);
   }
 }
 
+//takes in wasd
 void playerMove() {
   switch (keyCode) {
   case UP:
