@@ -11,7 +11,7 @@ void grid() {
 
 void checkScreen() {
   if (player.getX() == enemy.getX() && player.getY() == enemy.getY())
-    mode = "LOSESCREEN";
+      mode = "LOSESCREEN";
   if (player.getX() == coin.getX() && player.getY() == coin.getY())
     mode = "WINSCREEN";
 
@@ -40,26 +40,34 @@ void checkScreen() {
   }
 }
 
+int loseScreenSoundCount, winScreenSoundCount;
+
 void startScreen() {
+  if (winScreenSound.isPlaying()) winScreenSound.stop();
+  if (loseScreenSound.isPlaying()) loseScreenSound.stop();
+
+  loseScreenSoundCount = 0; 
+  winScreenSoundCount=0;
   image(STARTSCREEN, width/2, height/2);
 }
 
 void playScreen() {
+  if (startScreenSound.isPlaying()) startScreenSound.stop();
   background(255);
   graph();
   grid();
   player.display();
   enemy.display();
   coin.display();
-  
+
   //obsolete walls
   //for (Wall wall : wallArr) {
   //  wall.display();
   //}
-  
+
   player.checkSideCollision();
   enemy.checkSideCollision();
-  }
+}
 
 void pauseScreen() {
   image(PAUSESCREEN, width/2, height/2);
@@ -67,10 +75,21 @@ void pauseScreen() {
 
 void winScreen() {
   image(WINSCREEN, width/2, height/2);
+  if (winScreenSoundCount > 0) return;
+  else {
+    winScreenSound.play();
+    winScreenSoundCount++;
+  }
 }
+
 
 void loseScreen() {
   image(LOSESCREEN, width/2, height/2);
+  if (loseScreenSoundCount > 0) return;
+  else {
+    loseScreenSound.play();
+    loseScreenSoundCount++;
+  }
 }
 
 void settingScreen() {
@@ -78,8 +97,6 @@ void settingScreen() {
 }
 
 boolean startScreenSettingsPressed = false;
-
-
 //the logic for changing the screens
 void screenChange() {
   switch (mode) {
