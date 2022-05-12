@@ -41,7 +41,7 @@ void checkScreen() {
 }
 
 void startScreen() {
-  image(STARTSCREEN, 0, 0);
+  image(STARTSCREEN, width/2, height/2);
 }
 
 void playScreen() {
@@ -62,19 +62,19 @@ void playScreen() {
   }
 
 void pauseScreen() {
-  image(PAUSESCREEN, 0, 0);
+  image(PAUSESCREEN, width/2, height/2);
 }
 
 void winScreen() {
-  image(WINSCREEN, 0, 0);
+  image(WINSCREEN, width/2, height/2);
 }
 
 void loseScreen() {
-  image(LOSESCREEN, 0, 0);
+  image(LOSESCREEN, width/2, height/2);
 }
 
 void settingScreen() {
-  image(SETTINGSCREEN, 0, 0);
+  image(SETTINGSCREEN, width/2, height/2);
 }
 
 boolean startScreenSettingsPressed = false;

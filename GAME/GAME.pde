@@ -11,7 +11,7 @@ PImage STARTSCREEN, PAUSESCREEN, SETTINGSCREEN, WINSCREEN, LOSESCREEN;
 
 int numWalls = 20; //change
 void setup() {
-  size(600, 600);
+  size(580, 580);
   background(255);
   stroke(1);
   textAlign(CENTER);
@@ -23,6 +23,7 @@ void setup() {
   SETTINGSCREEN = loadImage("SETTINGSCREEN.png");
   WINSCREEN = loadImage("WINSCREEN.png");
   LOSESCREEN = loadImage("LOSESCREEN.png");
+  imageMode(CENTER);
   
   wallsCreate();
 }
@@ -32,8 +33,8 @@ void draw() {
   //checks for win/lose and displays appropriate screen
   checkScreen();
   if (mode == "PLAYSCREEN") {
-    player.updatePrevPos();
     player.checkWallCollision();
+    player.updatePrevPos();
   }
 }
 

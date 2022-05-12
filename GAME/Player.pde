@@ -11,21 +11,23 @@ public class Player extends GamePiece {
   }
   
   public void checkWallCollision(){
-    //find the wall the player is on if possible
-    if (getWall((player.getX()-40)/60, player.getY()/60, true) == null) return;
-    if(getWall(player.getX()/60, (player.getY()-40)/60, false) == null)  return;
-    
-    if((player.getX()/20+1)%3==0){//vertical wall collision
-      if(getWall((player.getX()-40)/60, player.getY()/60, true).isGraphed()){
+    if((float(player.getX())-40)/60%1==0&&(float(player.getY())-40)/60%1==0){
+      println("Point collision");
+      super.setX(prevX);
+      super.setY(prevY);
+    }if((float(player.getX())-40)/60%1==0){
+      var testWall=getWall((player.getX()-40)/60, player.getY()/60, false);
+      if(testWall!=null&&testWall.isGraphed()){
+        println("wall Collision");
         super.setX(prevX);
         super.setY(prevY);
       }
-    }
-    
-    else if((player.getY()/20+1)%3==0){//horizontal wall collision
-      if(getWall(player.getX()/60, (player.getY()-40)/60, false).isGraphed()){
-        super.setX(prevX);
-        super.setY(prevY);
+    }else if((float(player.getY())-40)/60%1==0){
+      var testWall=getWall(player.getX()/60, (player.getY()-40)/60, true);
+      if(testWall!=null&&testWall.isGraphed()){
+       println("wall Collision");
+       super.setX(prevX);
+       super.setY(prevY);
       }
     }
   }
