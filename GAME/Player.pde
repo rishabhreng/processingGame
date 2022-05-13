@@ -10,6 +10,7 @@ public class Player extends GamePiece {
     super.display(playerColor);
   }
   
+  //keeps player from moving in wall by comparing coordinates with wall coordinates
   public void checkWallCollision(){
     if((float(player.getX())-40)/60%1==0&&(float(player.getY())-40)/60%1==0){
       println("Point collision");
@@ -32,6 +33,7 @@ public class Player extends GamePiece {
     }
   }
   
+  //if player attempts to move into wall, keeps the player in the same place
   public void updatePrevPos() {
    prevX=super.getX();
    prevY=super.getY();
@@ -39,7 +41,7 @@ public class Player extends GamePiece {
   }
 }
 
-//takes in wasd
+//takes in arrow keys and moves player accordingly
 void playerMove() {
   switch (keyCode) {
   case UP:

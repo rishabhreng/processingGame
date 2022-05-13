@@ -40,6 +40,8 @@ public class Wall {
 }
 
 void generateMaze() {
+  accessibleSquares.clear();
+  accessibleSquares.add(new int[] {0,0});
   ArrayList<Wall> accessibleWalls=new ArrayList<Wall>();
   FloatList wallWeights=new FloatList();
   Wall weakestWall;
