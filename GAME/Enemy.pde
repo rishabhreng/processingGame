@@ -1,19 +1,47 @@
 public class Enemy extends GamePiece {
   private color enemyColor = #FF0000;
-  
-  public Enemy(int xpos,int ypos) {
+
+  public Enemy(int xpos, int ypos) {
     super(xpos, ypos);
   }
-  
+
   public void display() {
     super.display(enemyColor);
   }
 }
 
 void enemyMove() {
-  //randomly-moving enemy, not AI
-  int enemyMove = (int) (Math.random() * 4);
-  switch (enemyMove) {
+  int deltaX, deltaY;
+  int enemyMove;
+  switch(aiLevel) {
+  case 0:
+    //AI 1
+    deltaX=enemy.getX()-player.getX();
+    deltaY=enemy.getY()-player.getY();
+    if (abs(deltaX)>abs(deltaY)) {
+      if (deltaX<0) {
+        enemyMove=1;
+      } else {
+        enemyMove=0;
+      }
+    } else {
+      if (deltaY<0) {
+        enemyMove=3;
+      } else {
+        enemyMove=2;
+      }
+    }
+    enemyMotions(enemyMove);
+    break;
+  case 1:
+    // AI 2
+    //rank each move and do the best one, retracing steps until a move works
+    break;
+  }
+}
+
+void enemyMotions(int motion) {
+  switch (motion) {
   case 0:
     enemy.move(-20, 0);
     break;
