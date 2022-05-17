@@ -1,6 +1,6 @@
-import processing.sound.*; //<>//
+import processing.sound.*; //<>// //<>//
 //player vs enemy (blue vs red) in which enemy follows you every step you make, as u move toward a goal spot (like a coin)
-//TODO add ways to get to SETTINGS,WIN,and LOSESCREENS
+//TODO add ways to get to SETTINGS,WIN,and LOSESCREENS //<>//
 Player player = new Player(120, 60);
 Enemy enemy = new Enemy(300, 300);
 Coin coin = new Coin(200, 200);
@@ -8,7 +8,7 @@ ArrayList<Wall> wallArr = new ArrayList<Wall>();
 PFont font;
 String mode = "STARTSCREEN";
 
-SoundFile startScreenSound, loseScreenSound, winScreenSound;
+SoundFile startScreenSound, loseScreenSound, winScreenSound, moveSound, wallHitSound;
 
 PImage STARTSCREEN, PAUSESCREEN, SETTINGSCREEN, WINSCREEN, LOSESCREEN;
 
@@ -35,6 +35,9 @@ void setup() {
   startScreenSound = new SoundFile(this, "startScreen.wav");
   loseScreenSound = new SoundFile(this, "loseScreen.wav");
   winScreenSound = new SoundFile(this, "winScreen.wav");
+  moveSound = new SoundFile(this, "MoveSound.wav");
+  wallHitSound = new SoundFile(this, "WallHitSound.wav");
+
 
   startScreenSound.play();
 }

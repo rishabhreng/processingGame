@@ -43,6 +43,7 @@ public class Player extends GamePiece {
 
 //takes in arrow keys and moves player accordingly
 void playerMove() {
+  moveSound.play();
   switch (keyCode) {
   case UP:
     player.move(0, -20);
