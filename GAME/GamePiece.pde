@@ -1,9 +1,11 @@
 public class GamePiece {
-  private int xpos, ypos;
+  private int xpos, ypos, prevX, prevY;
 
   public GamePiece(int m_xpos, int m_ypos) {
     xpos = m_xpos;
     ypos = m_ypos;
+    prevX=xpos;
+    prevY=ypos;
   }
 
   public void display(color colour) {
@@ -27,6 +29,14 @@ public class GamePiece {
     return ypos;
   }
   
+  public int getPrevX(){
+   return prevX; 
+  }
+  
+  public int getPrevY(){
+   return prevY; 
+  }
+  
    public void setX(int x){
    xpos=x; 
   }
@@ -43,5 +53,32 @@ public class GamePiece {
     if (ypos < 0) move(0, height);
   }
   
+  public void checkWallCollision(){
+    if((float(getX())-40)/60%1==0&&(float(getY())-40)/60%1==0){
+      println("Point collision");
+      setX(prevX);
+      setY(prevY);
+    }if((float(getX())-40)/60%1==0){
+      var testWall=getWall((getX()-40)/60, getY()/60, false);
+      if(testWall!=null&&testWall.isGraphed()){
+        println("wall Collision");
+        setX(prevX);
+        setY(prevY);
+      }
+    }else if((float(getY())-40)/60%1==0){
+      var testWall=getWall(getX()/60, (getY()-40)/60, true);
+      if(testWall!=null&&testWall.isGraphed()){
+       println("wall Collision");
+       setX(prevX);
+       setY(prevY);
+      }
+    }
+  }
   
+  //if player attempts to move into wall, keeps the player in the same place
+  public void updatePrevPos() {
+   prevX=getX();
+   prevY=getY();
+   println(prevX + ", " + prevY);
+  }
 }

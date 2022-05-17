@@ -7,6 +7,7 @@ Coin coin = new Coin(200, 200);
 ArrayList<Wall> wallArr = new ArrayList<Wall>();
 PFont font;
 String mode = "STARTSCREEN";
+int aiLevel=0;
 
 SoundFile startScreenSound, loseScreenSound, winScreenSound, moveSound, wallHitSound;
 
@@ -50,6 +51,8 @@ void draw() {
     //keeps player from phasing thru wall
     player.checkWallCollision();
     player.updatePrevPos();
+    enemy.checkWallCollision();
+    enemy.updatePrevPos();
   }
 }
 
