@@ -58,12 +58,16 @@ public class GamePiece {
       println("Point collision");
       setX(prevX);
       setY(prevY);
+      if (moveSound.isPlaying()) moveSound.stop();
+      wallHitSound.play();
     }if((float(getX())-40)/60%1==0){
       var testWall=getWall((getX()-40)/60, getY()/60, false);
       if(testWall!=null&&testWall.isGraphed()){
         println("wall Collision");
         setX(prevX);
         setY(prevY);
+        if (moveSound.isPlaying()) moveSound.stop();
+        wallHitSound.play();
       }
     }else if((float(getY())-40)/60%1==0){
       var testWall=getWall(getX()/60, (getY()-40)/60, true);
@@ -71,6 +75,8 @@ public class GamePiece {
        println("wall Collision");
        setX(prevX);
        setY(prevY);
+       if (moveSound.isPlaying()) moveSound.stop();
+       wallHitSound.play();
       }
     }
   }
