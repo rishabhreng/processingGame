@@ -1,6 +1,8 @@
-import processing.sound.*; //<>// //<>//
+ //<>// //<>//
+
+import processing.sound.*; //<>//
 //player vs enemy (blue vs red) in which enemy follows you every step you make, as u move toward a goal spot (like a coin)
-//TODO add ways to get to SETTINGS,WIN,and LOSESCREENS //<>//
+//TODO add ways to get to SETTINGS,WIN,and LOSESCREENS
 Player player = new Player(120, 60);
 Enemy enemy = new Enemy(300, 300);
 Coin coin = new Coin(200, 200);
@@ -9,12 +11,17 @@ PFont font;
 String mode = "STARTSCREEN";
 int aiLevel=0;
 
+PrintWriter HighScore;
+int highScore = 0;
+boolean lost = false;
+
 SoundFile startScreenSound, loseScreenSound, winScreenSound, moveSound, wallHitSound;
 
 PImage STARTSCREEN, PAUSESCREEN, SETTINGSCREEN, WINSCREEN, LOSESCREEN;
 
 int numWalls = 20; //change
 void setup() {
+  HighScore = createWriter("highScore.txt");
   size(580, 580);
   background(255);
   stroke(1);
@@ -29,9 +36,9 @@ void setup() {
   SETTINGSCREEN = loadImage("SETTINGSCREEN.png");
   WINSCREEN = loadImage("WINSCREEN.png");
   LOSESCREEN = loadImage("LOSESCREEN.png");
-  
-  
-  
+
+
+
   //sounds
   startScreenSound = new SoundFile(this, "startScreen.wav");
   loseScreenSound = new SoundFile(this, "loseScreen.wav");
@@ -54,10 +61,12 @@ void draw() {
     enemy.checkWallCollision();
     enemy.updatePrevPos();
   }
+
 }
 
 void keyPressed() {
   // moves player in playscreen, and/or pauses
+  println(key);
   if (key == CODED) {
     if (mode == "PLAYSCREEN" && (keyCode==UP || keyCode==DOWN || keyCode==LEFT || keyCode==RIGHT)) {
       //enemy and player move any time arrow keys are pressed
@@ -65,11 +74,15 @@ void keyPressed() {
       playerMove();
     }
   } else if (key == 'p' && mode == "PLAYSCREEN") mode = "PAUSESCREEN";
+  else if ((int) key == 27) {
+    HighScore.println("High Score for Previous Game is: " + highScore);
+    HighScore.flush(); // Writes the remaining data to the file
+    HighScore.close(); // Finishes the file
+  }
 }
 
 void mousePressed() {
   println(mouseX + ", " + mouseY);
-  
   //might change when part of screen is clicked
   screenChange();
 }

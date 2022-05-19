@@ -77,7 +77,7 @@ public class GamePiece {
        setY(prevY);
        if (moveSound.isPlaying()) moveSound.stop();
        wallHitSound.play();
-      }
+      } 
     }
   }
   
