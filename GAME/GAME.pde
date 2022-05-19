@@ -1,19 +1,15 @@
- //<>// //<>//
-
-import processing.sound.*; //<>//
+import processing.sound.*; //<>// //<>// //<>//
 //player vs enemy (blue vs red) in which enemy follows you every step you make, as u move toward a goal spot (like a coin)
 //TODO add ways to get to SETTINGS,WIN,and LOSESCREENS
-Player player = new Player(120, 60);
-Enemy enemy = new Enemy(300, 300);
+Player player = new Player(RandPos(), RandPos());
+//Enemy enemy = new Enemy(300, 300);
 Coin coin = new Coin(200, 200);
 ArrayList<Wall> wallArr = new ArrayList<Wall>();
 PFont font;
 String mode = "STARTSCREEN";
-int aiLevel=0;
-
-PrintWriter HighScore;
-int highScore = 0;
-boolean lost = false;
+int aiLevel=1;//level 1 is unpredictable
+int numEnemies=20;
+ArrayList<Enemy> enemies=new ArrayList<Enemy>();
 
 SoundFile startScreenSound, loseScreenSound, winScreenSound, moveSound, wallHitSound;
 
@@ -21,7 +17,6 @@ PImage STARTSCREEN, PAUSESCREEN, SETTINGSCREEN, WINSCREEN, LOSESCREEN;
 
 int numWalls = 20; //change
 void setup() {
-  HighScore = createWriter("highScore.txt");
   size(580, 580);
   background(255);
   stroke(1);
@@ -48,6 +43,9 @@ void setup() {
 
 
   startScreenSound.play();
+  for (int i=0; i<numEnemies; i++) {
+    enemies.add(new Enemy(0, 0));
+  }
 }
 
 
@@ -58,31 +56,29 @@ void draw() {
     //keeps player from phasing thru wall
     player.checkWallCollision();
     player.updatePrevPos();
-    enemy.checkWallCollision();
-    enemy.updatePrevPos();
+    for (Enemy enemy : enemies) {
+      enemy.checkWallCollision();
+      enemy.updatePrevPos();
+    }
   }
-
 }
 
 void keyPressed() {
   // moves player in playscreen, and/or pauses
-  println(key);
   if (key == CODED) {
     if (mode == "PLAYSCREEN" && (keyCode==UP || keyCode==DOWN || keyCode==LEFT || keyCode==RIGHT)) {
       //enemy and player move any time arrow keys are pressed
-      enemyMove();
+      for(Enemy enemy:enemies){
+        enemyMove(enemy);
+      }
       playerMove();
     }
   } else if (key == 'p' && mode == "PLAYSCREEN") mode = "PAUSESCREEN";
-  else if ((int) key == 27) {
-    HighScore.println("High Score for Previous Game is: " + highScore);
-    HighScore.flush(); // Writes the remaining data to the file
-    HighScore.close(); // Finishes the file
-  }
 }
 
 void mousePressed() {
   println(mouseX + ", " + mouseY);
+
   //might change when part of screen is clicked
   screenChange();
 }
