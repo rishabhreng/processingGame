@@ -1,4 +1,4 @@
-import processing.sound.*; //<>// //<>// //<>//
+import processing.sound.*; //<>// //<>// //<>// //<>// //<>//
 //player vs enemy (blue vs red) in which enemy follows you every step you make, as u move toward a goal spot (like a coin)
 //TODO add ways to get to SETTINGS,WIN,and LOSESCREENS
 Player player = new Player(RandPos(), RandPos());
@@ -14,6 +14,10 @@ ArrayList<Enemy> enemies=new ArrayList<Enemy>();
 SoundFile startScreenSound, loseScreenSound, winScreenSound, moveSound, wallHitSound;
 
 PImage STARTSCREEN, PAUSESCREEN, SETTINGSCREEN, WINSCREEN, LOSESCREEN;
+
+PrintWriter HighScore;
+int highScore;
+boolean lost = false;
 
 int numWalls = 20; //change
 void setup() {
@@ -32,15 +36,12 @@ void setup() {
   WINSCREEN = loadImage("WINSCREEN.png");
   LOSESCREEN = loadImage("LOSESCREEN.png");
 
-
-
   //sounds
   startScreenSound = new SoundFile(this, "startScreen.wav");
   loseScreenSound = new SoundFile(this, "loseScreen.wav");
   winScreenSound = new SoundFile(this, "winScreen.wav");
   moveSound = new SoundFile(this, "MoveSound.wav");
   wallHitSound = new SoundFile(this, "WallHitSound.wav");
-
 
   startScreenSound.play();
   for (int i=0; i<numEnemies; i++) {
@@ -68,12 +69,17 @@ void keyPressed() {
   if (key == CODED) {
     if (mode == "PLAYSCREEN" && (keyCode==UP || keyCode==DOWN || keyCode==LEFT || keyCode==RIGHT)) {
       //enemy and player move any time arrow keys are pressed
-      for(Enemy enemy:enemies){
+      for (Enemy enemy : enemies) {
         enemyMove(enemy);
       }
       playerMove();
     }
   } else if (key == 'p' && mode == "PLAYSCREEN") mode = "PAUSESCREEN";
+  else if ((int) key == 27) {
+    HighScore.println("High Score for Game" + highScore);
+    HighScore.flush(); // Writes the remaining data to the file
+    HighScore.close(); // Finishes the file
+  }
 }
 
 void mousePressed() {

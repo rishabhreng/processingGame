@@ -1,4 +1,4 @@
-//not a class, just organized functions
+//not a class, just organized functions //<>//
 void grid() {
   int grid=20;
   for (int i = 0; i < width; i+=grid) {
@@ -10,35 +10,39 @@ void grid() {
 }
 
 void checkScreen() {
-  for(Enemy enemy:enemies){
-  if (player.getX() == enemy.getX() && player.getY() == enemy.getY())
-    mode = "LOSESCREEN";
-  }
-  if (player.getX() == coin.getX() && player.getY() == coin.getY())
-    mode = "WINSCREEN";
+  for (Enemy enemy : enemies) {
 
-  switch (mode) {
-  case "STARTSCREEN":
-    startScreen();
-    break;
-  case "PLAYSCREEN":
-    playScreen();
-    break;
-  case "PAUSESCREEN":
-    pauseScreen();
-    break;
-  case "WINSCREEN":
-    winScreen();
-    break;
-  case "LOSESCREEN":
-    loseScreen();
-    break;
-  case "SETTINGSCREEN":
-    settingScreen();
-    break;
-  default:
-    pauseScreen();
-    break;
+    switch (mode) {
+    case "STARTSCREEN":
+      startScreen();
+      break;
+    case "PLAYSCREEN":
+      playScreen();
+      if (player.getX() == enemy.getX() && player.getY() == enemy.getY()) {
+        mode = "LOSESCREEN";
+        lost = true;
+      }
+      if (player.getX() == coin.getX() && player.getY() == coin.getY() && lost == false) {
+        mode = "WINSCREEN";
+        highScore++;
+      }
+      break;
+    case "PAUSESCREEN":
+      pauseScreen();
+      break;
+    case "WINSCREEN":
+      winScreen();
+      break;
+    case "LOSESCREEN":
+      loseScreen();
+      break;
+    case "SETTINGSCREEN":
+      settingScreen();
+      break;
+    default:
+      pauseScreen();
+      break;
+    }
   }
 }
 
@@ -52,7 +56,6 @@ void screenChange() {
       wallsCreate();
       randomizePositions();
       mode = "PLAYSCREEN";
-      
     } else if ((mouseX > 145 && mouseX < 450) && (mouseY > 415 && mouseY < 485)) {
       mode = "SETTINGSCREEN";
       startScreenSettingsPressed = true;
@@ -101,7 +104,7 @@ void playScreen() {
   graph();
   grid();
   player.display();
-  for(Enemy enemy:enemies){
+  for (Enemy enemy : enemies) {
     enemy.display();
   }
   coin.display();
@@ -112,8 +115,8 @@ void playScreen() {
   //}
 
   player.checkSideCollision();
-  for(Enemy enemy:enemies){
-  enemy.checkSideCollision();
+  for (Enemy enemy : enemies) {
+    enemy.checkSideCollision();
   }
 }
 
