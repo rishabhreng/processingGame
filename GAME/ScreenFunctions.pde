@@ -1,4 +1,4 @@
-//not a class, just organized functions //<>//
+//not a class, just organized functions
 void grid() {
   int grid=20;
   for (int i = 0; i < width; i+=grid) {
@@ -10,21 +10,19 @@ void grid() {
 }
 
 void checkScreen() {
+  for(Enemy enemy:enemies){
+  if (player.getX() == enemy.getX() && player.getY() == enemy.getY())
+    mode = "LOSESCREEN";
+  }
+  if (player.getX() == coin.getX() && player.getY() == coin.getY())
+    mode = "WINSCREEN";
+
   switch (mode) {
   case "STARTSCREEN":
     startScreen();
     break;
   case "PLAYSCREEN":
     playScreen();
-    if (player.getX() == enemy.getX() && player.getY() == enemy.getY()){
-      lost = true;
-      mode = "LOSESCREEN";
-    }
-    if (player.getX() == coin.getX() && player.getY() == coin.getY() && lost==false)
-    {
-      highScore++;
-      mode = "WINSCREEN";
-    }
     break;
   case "PAUSESCREEN":
     pauseScreen();
@@ -52,7 +50,9 @@ void screenChange() {
     if ((mouseX > 105 && mouseX < 485) && (mouseY > 215 && mouseY < 380))
     {
       wallsCreate();
+      randomizePositions();
       mode = "PLAYSCREEN";
+      
     } else if ((mouseX > 145 && mouseX < 450) && (mouseY > 415 && mouseY < 485)) {
       mode = "SETTINGSCREEN";
       startScreenSettingsPressed = true;
@@ -101,7 +101,9 @@ void playScreen() {
   graph();
   grid();
   player.display();
-  enemy.display();
+  for(Enemy enemy:enemies){
+    enemy.display();
+  }
   coin.display();
 
   //obsolete walls
@@ -110,7 +112,9 @@ void playScreen() {
   //}
 
   player.checkSideCollision();
+  for(Enemy enemy:enemies){
   enemy.checkSideCollision();
+  }
 }
 
 void pauseScreen() {

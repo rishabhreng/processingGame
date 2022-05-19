@@ -10,7 +10,7 @@ public class Enemy extends GamePiece {
   }
 }
 
-void enemyMove() {
+void enemyMove(Enemy enemy) {
   int deltaX, deltaY;
   int enemyMove;
   switch(aiLevel) {
@@ -31,16 +31,18 @@ void enemyMove() {
         enemyMove=2;
       }
     }
-    enemyMotions(enemyMove);
+    enemyMotions(enemyMove, enemy);
     break;
   case 1:
+    enemyMove=(int) (Math.random()*4);
+    enemyMotions(enemyMove, enemy);
     // AI 2
     //rank each move and do the best one, retracing steps until a move works
     break;
   }
 }
 
-void enemyMotions(int motion) {
+void enemyMotions(int motion, Enemy enemy) {
   switch (motion) {
   case 0:
     enemy.move(-20, 0);
