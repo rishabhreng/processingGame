@@ -1,1 +1,2 @@
 High Score for Previous Game is: 3
+High Score is: 1

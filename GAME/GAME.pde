@@ -1,4 +1,4 @@
-import processing.sound.*; //<>// //<>// //<>// //<>// //<>//
+import processing.sound.*; //<>//
 //player vs enemy (blue vs red) in which enemy follows you every step you make, as u move toward a goal spot (like a coin)
 //TODO add ways to get to SETTINGS,WIN,and LOSESCREENS
 Player player = new Player(RandPos(), RandPos());
@@ -7,7 +7,7 @@ Coin coin = new Coin(200, 200);
 ArrayList<Wall> wallArr = new ArrayList<Wall>();
 PFont font;
 String mode = "STARTSCREEN";
-int aiLevel=1;//level 1 is unpredictable
+int aiLevel=0;//level 1 is unpredictable
 int numEnemies=20;
 ArrayList<Enemy> enemies=new ArrayList<Enemy>();
 
@@ -15,12 +15,11 @@ SoundFile startScreenSound, loseScreenSound, winScreenSound, moveSound, wallHitS
 
 PImage STARTSCREEN, PAUSESCREEN, SETTINGSCREEN, WINSCREEN, LOSESCREEN;
 
-PrintWriter HighScore;
-int highScore;
+int highScore = 0;
 boolean lost = false;
 
 int numWalls = 20; //change
-void setup() {
+void setup() {  
   size(580, 580);
   background(255);
   stroke(1);
@@ -55,7 +54,10 @@ void draw() {
   checkScreen();
   if (mode == "PLAYSCREEN") {
     //keeps player from phasing thru wall
-    player.checkWallCollision();
+    if (player.checkWallCollision() == 1) {
+      if (moveSound.isPlaying()) moveSound.stop();
+      wallHitSound.play();
+    }
     player.updatePrevPos();
     for (Enemy enemy : enemies) {
       enemy.checkWallCollision();
@@ -76,9 +78,7 @@ void keyPressed() {
     }
   } else if (key == 'p' && mode == "PLAYSCREEN") mode = "PAUSESCREEN";
   else if ((int) key == 27) {
-    HighScore.println("High Score for Game" + highScore);
-    HighScore.flush(); // Writes the remaining data to the file
-    HighScore.close(); // Finishes the file
+    appendTextToFile("highScore.txt", "High Score is: " + highScore);
   }
 }
 

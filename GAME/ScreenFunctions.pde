@@ -22,9 +22,9 @@ void checkScreen() {
         mode = "LOSESCREEN";
         lost = true;
       }
-      if (player.getX() == coin.getX() && player.getY() == coin.getY() && lost == false) {
+      if (player.getX() == coin.getX() && player.getY() == coin.getY()) {
         mode = "WINSCREEN";
-        highScore++;
+        if (!lost) highScore++;
       }
       break;
     case "PAUSESCREEN":

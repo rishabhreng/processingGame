@@ -53,11 +53,12 @@ public class GamePiece {
     if (ypos < 0) move(0, height);
   }
 
-  public void checkWallCollision() {
+  public int checkWallCollision() {
     if ((float(getX())-40)/60%1==0&&(float(getY())-40)/60%1==0) {
       println("Point collision");
       setX(prevX);
       setY(prevY);
+      return 1;
     }
     if ((float(getX())-40)/60%1==0) {
       var testWall=getWall((getX()-40)/60, getY()/60, false);
@@ -65,15 +66,19 @@ public class GamePiece {
         println("wall Collision");
         setX(prevX);
         setY(prevY);
+        return 1;
       }
-    } else if ((float(getY())-40)/60%1==0) {
+    } 
+    else if ((float(getY())-40)/60%1==0) {
       var testWall=getWall(getX()/60, (getY()-40)/60, true);
       if (testWall!=null&&testWall.isGraphed()) {
         println("wall Collision");
         setX(prevX);
         setY(prevY);
+        return 1;
       }
     }
+    return 0;
   }
 
   //if player attempts to move into wall, keeps the player in the same place
