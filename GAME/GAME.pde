@@ -13,7 +13,7 @@ ArrayList<Enemy> enemies=new ArrayList<Enemy>();
 
 SoundFile startScreenSound, loseScreenSound, winScreenSound, moveSound, wallHitSound;
 
-PImage STARTSCREEN, PAUSESCREEN, SETTINGSCREEN, WINSCREEN, LOSESCREEN;
+PImage STARTSCREEN, PAUSESCREEN, SETTINGSCREEN, WINSCREEN, LOSESCREEN, COIN;
 
 int highScore = 0;
 boolean lost = false;
@@ -34,7 +34,7 @@ void setup() {
   SETTINGSCREEN = loadImage("SETTINGSCREEN.png");
   WINSCREEN = loadImage("WINSCREEN.png");
   LOSESCREEN = loadImage("LOSESCREEN.png");
-
+  COIN = loadImage("SmallCoin.png");
   //sounds
   startScreenSound = new SoundFile(this, "startScreen.wav");
   loseScreenSound = new SoundFile(this, "loseScreen.wav");

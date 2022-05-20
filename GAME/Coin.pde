@@ -8,5 +8,8 @@ public class Coin extends GamePiece {
   
   public void display() {
     super.display(coinColor);
+    imageMode(CORNER);
+    image(COIN, getX(), getY());
+    imageMode(CENTER);
   } 
 }
