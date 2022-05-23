@@ -1,6 +1,6 @@
 //reach it to win
 public class Coin extends GamePiece {
-  private color coinColor = #FFFF00;
+  private color coinColor = #FFFFFF;
   
   public Coin(int xpos,int ypos) {
     super(xpos, ypos);

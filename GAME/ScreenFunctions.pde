@@ -11,17 +11,18 @@ void grid() {
 
 void checkScreen() {
   for (Enemy enemy : enemies) {
-
     switch (mode) {
     case "STARTSCREEN":
       startScreen();
       break;
     case "PLAYSCREEN":
       playScreen();
+      //check enemy collision
       if (player.getX() == enemy.getX() && player.getY() == enemy.getY()) {
         mode = "LOSESCREEN";
         lost = true;
       }
+      //check coin collision
       if (player.getX() == coin.getX() && player.getY() == coin.getY()) {
         mode = "WINSCREEN";
         if (!lost) highScore++;
@@ -108,11 +109,6 @@ void playScreen() {
     enemy.display();
   }
   coin.display();
-
-  //obsolete walls
-  //for (Wall wall : wallArr) {
-  //  wall.display();
-  //}
 
   player.checkSideCollision();
   for (Enemy enemy : enemies) {

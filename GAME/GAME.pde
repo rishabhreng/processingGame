@@ -1,15 +1,17 @@
-import processing.sound.*; //<>//
-//player vs enemy (blue vs red) in which enemy follows you every step you make, as u move toward a goal spot (like a coin)
-//TODO add ways to get to SETTINGS,WIN,and LOSESCREENS
+//player vs enemy (blue vs red) in which enemy follows you every step you make, as u move toward a goal spot (a coin) //<>//
+
+import processing.sound.*;
+
 Player player = new Player(RandPos(), RandPos());
 //Enemy enemy = new Enemy(300, 300);
 Coin coin = new Coin(200, 200);
 ArrayList<Wall> wallArr = new ArrayList<Wall>();
 PFont font;
 String mode = "STARTSCREEN";
-int aiLevel=0;//level 1 is unpredictable
+int aiLevel = 0;//level 1 is unpredictable/random movement
 int numEnemies=20;
 ArrayList<Enemy> enemies=new ArrayList<Enemy>();
+boolean keyPush = false;
 
 SoundFile startScreenSound, loseScreenSound, winScreenSound, moveSound, wallHitSound;
 
@@ -19,7 +21,7 @@ int highScore = 0;
 boolean lost = false;
 
 int numWalls = 20; //change
-void setup() {  
+void setup() {
   size(580, 580);
   background(255);
   stroke(1);
@@ -48,10 +50,8 @@ void setup() {
   }
 }
 
-
 void draw() {
   //checks for win/lose and/or displays appropriate screen
-  checkScreen();
   if (mode == "PLAYSCREEN") {
     //keeps player from phasing thru wall
     if (player.checkWallCollision() == 1) {
@@ -64,27 +64,34 @@ void draw() {
       enemy.updatePrevPos();
     }
   }
+  checkScreen();
 }
 
 void keyPressed() {
   // moves player in playscreen, and/or pauses
-  if (key == CODED) {
-    if (mode == "PLAYSCREEN" && (keyCode==UP || keyCode==DOWN || keyCode==LEFT || keyCode==RIGHT)) {
-      //enemy and player move any time arrow keys are pressed
-      for (Enemy enemy : enemies) {
-        enemyMove(enemy);
+  if (!keyPush) {
+    if (key == CODED) {
+      if (mode == "PLAYSCREEN" && (keyCode==UP || keyCode==DOWN || keyCode==LEFT || keyCode==RIGHT)) {
+        //enemy and player move any time arrow keys are pressed
+        for (Enemy enemy : enemies) {
+          enemyMove(enemy);
+        }
+        playerMove();
       }
-      playerMove();
+    } else if (key == 'p' && mode == "PLAYSCREEN") mode = "PAUSESCREEN";
+    else if ((int) key == 27) {
+      appendTextToFile("highScore.txt", "High Score is: " + highScore);
     }
-  } else if (key == 'p' && mode == "PLAYSCREEN") mode = "PAUSESCREEN";
-  else if ((int) key == 27) {
-    appendTextToFile("highScore.txt", "High Score is: " + highScore);
   }
+  keyPush = true;
+}
+
+void keyReleased() {
+  keyPush = false;
 }
 
 void mousePressed() {
   println(mouseX + ", " + mouseY);
-
-  //might change when part of screen is clicked
+  //might change the screen when a "button" on screen is clicked
   screenChange();
 }
