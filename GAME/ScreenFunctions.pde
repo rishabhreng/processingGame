@@ -20,12 +20,11 @@ void checkScreen() {
       //check enemy collision
       if (player.getX() == enemy.getX() && player.getY() == enemy.getY()) {
         mode = "LOSESCREEN";
-        lost = true;
       }
       //check coin collision
       if (player.getX() == coin.getX() && player.getY() == coin.getY()) {
         mode = "WINSCREEN";
-        if (!lost) highScore++;
+        highScore++;
       }
       break;
     case "PAUSESCREEN":
@@ -72,8 +71,11 @@ void screenChange() {
     player.move(100, 100);
     break;
   case "LOSESCREEN":
-    if ((mouseX > 35 && mouseX < 555) && (mouseY > 505 && mouseY < 575)) mode = "STARTSCREEN";
-    player.move(100, 100);
+    if ((mouseX > 35 && mouseX < 555) && (mouseY > 505 && mouseY < 575)) {
+      mode = "STARTSCREEN";
+      appendTextToFile("highScore.txt", "High Score is: " + highScore);
+      highScore=0;
+    }
     break;
   case "SETTINGSCREEN":
     if ((mouseX > 105 && mouseX < 485) && (mouseY > 520 && mouseY < 580)) {

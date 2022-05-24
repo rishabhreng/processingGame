@@ -36,7 +36,7 @@ void setup() {
   SETTINGSCREEN = loadImage("SETTINGSCREEN.png");
   WINSCREEN = loadImage("WINSCREEN.png");
   LOSESCREEN = loadImage("LOSESCREEN.png");
-  COIN = loadImage("SmallCoin.png");
+  COIN = loadImage("coin.png");
   //sounds
   startScreenSound = new SoundFile(this, "startScreen.wav");
   loseScreenSound = new SoundFile(this, "loseScreen.wav");
