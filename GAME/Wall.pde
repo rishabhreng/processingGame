@@ -2,7 +2,7 @@ int gridX=10;//grid dimensions
 int gridY=10;
 Wall[] walls=new Wall[gridY*(gridX-1)+gridX*(gridY-1)];
 ArrayList<int[]> accessibleSquares=new ArrayList<int[]>();
-float loopConstant=.7;
+float loopConstant=.9;
 
 public class Wall {
   private color wallColor = #808080;

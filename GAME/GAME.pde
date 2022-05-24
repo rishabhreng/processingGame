@@ -4,26 +4,25 @@ import processing.sound.*;
 
 Player player = new Player(RandPos(), RandPos());
 //Enemy enemy = new Enemy(300, 300);
+ArrayList<Enemy> enemies=new ArrayList<Enemy>();
 Coin coin = new Coin(200, 200);
 ArrayList<Wall> wallArr = new ArrayList<Wall>();
 PFont font;
 String mode = "STARTSCREEN";
-int aiLevel = 0;//level 1 is unpredictable/random movement
+int aiLevel = 2;//level 1 is unpredictable/random movement
 int numEnemies=20;
-ArrayList<Enemy> enemies=new ArrayList<Enemy>();
+
 boolean keyPush = false;
 
 SoundFile startScreenSound, loseScreenSound, winScreenSound, moveSound, wallHitSound;
-
 PImage STARTSCREEN, PAUSESCREEN, SETTINGSCREEN, WINSCREEN, LOSESCREEN, COIN;
 
 int highScore = 0;
-boolean lost = false;
 
 int numWalls = 20; //change
 void setup() {
   size(580, 580);
-  background(255);
+  //background(255);
   stroke(1);
   textAlign(CENTER);
   font = loadFont("Impact-48.vlw");
@@ -36,7 +35,7 @@ void setup() {
   SETTINGSCREEN = loadImage("SETTINGSCREEN.png");
   WINSCREEN = loadImage("WINSCREEN.png");
   LOSESCREEN = loadImage("LOSESCREEN.png");
-  COIN = loadImage("coin.png");
+  COIN = loadImage("SmallCoin.png");
   //sounds
   startScreenSound = new SoundFile(this, "startScreen.wav");
   loseScreenSound = new SoundFile(this, "loseScreen.wav");
@@ -80,7 +79,7 @@ void keyPressed() {
       }
     } else if (key == 'p' && mode == "PLAYSCREEN") mode = "PAUSESCREEN";
     else if ((int) key == 27) {
-      appendTextToFile("highScore.txt", "High Score is: " + highScore);
+      
     }
   }
   keyPush = true;
