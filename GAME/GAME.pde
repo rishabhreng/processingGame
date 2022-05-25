@@ -78,8 +78,9 @@ void keyPressed() {
         playerMove();
       }
     } else if (key == 'p' && mode == "PLAYSCREEN") mode = "PAUSESCREEN";
+      else if (key == 'p' && mode == "PAUSESCREEN") mode = "PLAYSCREEN";
     else if ((int) key == 27) {
-      
+        appendTextToFile("highScore.txt", "High Score is: " + highScore);
     }
   }
   keyPush = true;
@@ -90,7 +91,6 @@ void keyReleased() {
 }
 
 void mousePressed() {
-  println(mouseX + ", " + mouseY);
   //might change the screen when a "button" on screen is clicked
   screenChange();
 }

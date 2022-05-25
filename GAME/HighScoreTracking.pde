@@ -4,6 +4,7 @@ import java.io.FileWriter;
 String outFilename = "out.txt";
 
 /**
+ * based on stackoverflow code
  * Appends text to the end of a text file located in the data directory, 
  * creates the file if it does not exist.
  * Can be used for big files with lots of rows, 

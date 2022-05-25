@@ -10,50 +10,54 @@ void grid() {
 }
 
 void checkScreen() {
-  for (Enemy enemy : enemies) {
-    switch (mode) {
-    case "STARTSCREEN":
-      startScreen();
-      break;
-    case "PLAYSCREEN":
-      playScreen();
-      //check enemy collision
+
+  switch (mode) {
+  case "STARTSCREEN":
+    startScreen();
+    break;
+  case "PLAYSCREEN":
+    winScreenSoundCount = 0;
+    loseScreenSoundCount = 0;
+
+    playScreen();
+    //check enemy collision
+    for (Enemy enemy : enemies) {
       if (player.getX() == enemy.getX() && player.getY() == enemy.getY()) {
         mode = "LOSESCREEN";
-        appendTextToFile("highScore.txt", "High Score is: " + highScore);
+        if (highScore!=0) appendTextToFile("highScore.txt", "High Score is: " + highScore);
         highScore = 0;
       }
-      //check coin collision
-      if (player.getX() == coin.getX() && player.getY() == coin.getY()) {
-        mode = "WINSCREEN";
-      }
-      break;
-    case "PAUSESCREEN":
-      pauseScreen();
-      break;
-    case "WINSCREEN":
-      winScreen();
-      break;
-    case "LOSESCREEN":
-      loseScreen();
-      break;
-    case "SETTINGSCREEN":
-      settingScreen();
-      break;
-    default:
-      pauseScreen();
-      break;
     }
+    //check coin collision
+    if (player.getX() == coin.getX() && player.getY() == coin.getY()) {
+      mode = "WINSCREEN";
+      highScore++;
+    }
+    break;
+  case "PAUSESCREEN":
+    pauseScreen();
+    break;
+  case "WINSCREEN":
+    winScreen();
+    break;
+  case "LOSESCREEN":
+    loseScreen();
+    break;
+  case "SETTINGSCREEN":
+    settingScreen();
+    break;
+  default:
+    pauseScreen();
+    break;
   }
 }
 
 boolean startScreenSettingsPressed = false;
-//the logic for changing the screens
+//the logic for changing the screens, what happens if the user clicks a button on given page
 void screenChange() {
   switch (mode) {
   case "STARTSCREEN":
-    if ((mouseX > 105 && mouseX < 485) && (mouseY > 215 && mouseY < 380))
-    {
+    if ((mouseX > 105 && mouseX < 485) && (mouseY > 215 && mouseY < 380)) {
       wallsCreate();
       randomizePositions();
       mode = "PLAYSCREEN";
@@ -68,7 +72,7 @@ void screenChange() {
     else if ((mouseX > 145 && mouseX < 450) && (mouseY > 385 && mouseY < 440)) mode = "SETTINGSCREEN";
     break;
   case "WINSCREEN":
-    if ((mouseX > 35 && mouseX < 565) && (mouseY > 505 && mouseY < 575)){
+    if ((mouseX > 35 && mouseX < 565) && (mouseY > 505 && mouseY < 575)) {
       mode = "PLAYSCREEN";
       wallsCreate();
       randomizePositions();
@@ -76,18 +80,17 @@ void screenChange() {
     break;
   case "LOSESCREEN":
     if ((mouseX > 35 && mouseX < 555) && (mouseY > 505 && mouseY < 575))
-    { 
-      mode = "STARTSCREEN";
-   startScreenSettingsPressed=false;  
-  }
+    {
+      mode = "PLAYSCREEN";
+      wallsCreate();
+      randomizePositions();
+      startScreenSettingsPressed=false;
+    }
     break;
   case "SETTINGSCREEN":
     if ((mouseX > 105 && mouseX < 485) && (mouseY > 520 && mouseY < 580)) {
-      if (startScreenSettingsPressed) mode = "PLAYSCREEN";
-      else {
-        mode = "PAUSESCREEN";
-        startScreenSettingsPressed = !startScreenSettingsPressed;
-      }
+      if (startScreenSettingsPressed) mode = "STARTSCREEN";
+      else mode = "PAUSESCREEN";
     }
     break;
   }
@@ -101,12 +104,14 @@ void startScreen() {
   if (loseScreenSound.isPlaying()) loseScreenSound.stop();
 
   loseScreenSoundCount = 0;
-  winScreenSoundCount=0;
+  winScreenSoundCount= 0;
   image(STARTSCREEN, width/2, height/2);
 }
 
 void playScreen() {
   if (startScreenSound.isPlaying()) startScreenSound.stop();
+  if (winScreenSound.isPlaying()) winScreenSound.stop();
+
   background(255);
   graph();
   grid();

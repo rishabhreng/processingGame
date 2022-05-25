@@ -55,7 +55,6 @@ public class GamePiece {
 
   public int checkWallCollision() {
     if ((float(getX())-40)/60%1==0&&(float(getY())-40)/60%1==0) {
-      println("Point collision");
       setX(prevX);
       setY(prevY);
       return 1;
@@ -63,7 +62,6 @@ public class GamePiece {
     if ((float(getX())-40)/60%1==0) {
       var testWall=getWall((getX()-40)/60, getY()/60, false);
       if (testWall!=null&&testWall.isGraphed()) {
-        println("wall Collision");
         setX(prevX);
         setY(prevY);
         return 1;
@@ -72,7 +70,6 @@ public class GamePiece {
     else if ((float(getY())-40)/60%1==0) {
       var testWall=getWall(getX()/60, (getY()-40)/60, true);
       if (testWall!=null&&testWall.isGraphed()) {
-        println("wall Collision");
         setX(prevX);
         setY(prevY);
         return 1;
@@ -85,7 +82,6 @@ public class GamePiece {
   public void updatePrevPos() {
     prevX=getX();
     prevY=getY();
-    println(prevX + ", " + prevY);
   }
 }
 

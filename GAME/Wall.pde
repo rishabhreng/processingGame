@@ -26,7 +26,7 @@ public class Wall {
   public boolean isGraphed() {
     return graphed;
   }
-  
+
   public void display() {
     if (isGraphed()) {
       fill(wallColor);
@@ -41,7 +41,7 @@ public class Wall {
 
 void generateMaze() {
   accessibleSquares.clear();
-  accessibleSquares.add(new int[] {0,0});
+  accessibleSquares.add(new int[] {0, 0});
   ArrayList<Wall> accessibleWalls=new ArrayList<Wall>();
   FloatList wallWeights=new FloatList();
   Wall weakestWall;
@@ -143,23 +143,23 @@ void graph() {
 }
 
 void wallsCreate() {
-//horizontal walls
+  //horizontal walls
   int index=0;
-  for(int x=0;x<gridX;x++){
-    for(int y=0;y<gridY-1;y++){
+  for (int x=0; x<gridX; x++) {
+    for (int y=0; y<gridY-1; y++) {
       walls[index]=new Wall(x, y, true);
       index++;
     }
   }
   //vertical walls
-  for(int x=0;x<gridX-1;x++){
-   for(int y=0;y<gridY;y++){
-    walls[index]=new Wall(x, y, false);
-    index++;
-   }
+  for (int x=0; x<gridX-1; x++) {
+    for (int y=0; y<gridY; y++) {
+      walls[index]=new Wall(x, y, false);
+      index++;
+    }
   }
-  for(Wall wall:walls){
-   wall.randomize(); 
+  for (Wall wall : walls) {
+    wall.randomize();
   }
   accessibleSquares.add(new int[] {0, 0});
   generateMaze();
