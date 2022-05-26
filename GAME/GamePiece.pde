@@ -1,3 +1,4 @@
+//general class for enemies, player, and coin
 public class GamePiece {
   private int xpos, ypos, prevX, prevY;
 

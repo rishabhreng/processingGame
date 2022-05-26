@@ -1,16 +1,20 @@
 //player vs enemy (blue vs red) in which enemy follows you every step you make, as u move toward a goal spot (a coin) //<>//
+//highScore file updates every time you lose or every time you press escape key (which also closes the game)
 
+//player is blue
+//red enemies are based on an engine
+//pink enemies move the same direction the player moves
+//green ememies move randomly
 import processing.sound.*;
 
 Player player = new Player(RandPos(), RandPos());
-//Enemy enemy = new Enemy(300, 300);
 ArrayList<Enemy> enemies=new ArrayList<Enemy>();
-Coin coin = new Coin(200, 200);
 ArrayList<Wall> wallArr = new ArrayList<Wall>();
-PFont font;
-String mode = "STARTSCREEN";
+Coin coin = new Coin(200, 200);
+
+String mode;
 int aiLevel = 2;//level 1 is unpredictable/random movement
-int numEnemies=20;
+int numEnemies=100;
 
 boolean keyPush = false;
 
@@ -21,12 +25,11 @@ int highScore = 0;
 
 int numWalls = 20; //change
 void setup() {
+  mode = "STARTSCREEN";
+
+  frameRate(120);
   size(580, 580);
-  //background(255);
   stroke(1);
-  textAlign(CENTER);
-  font = loadFont("Impact-48.vlw");
-  textFont(font, 48);
 
   //images
   imageMode(CENTER);
@@ -77,11 +80,10 @@ void keyPressed() {
         }
         playerMove();
       }
-    } else if (key == 'p' && mode == "PLAYSCREEN") mode = "PAUSESCREEN";
-      else if (key == 'p' && mode == "PAUSESCREEN") mode = "PLAYSCREEN";
-    else if ((int) key == 27) {
-        appendTextToFile("highScore.txt", "High Score is: " + highScore);
-    }
+    } 
+    else if (key == 'p' && mode == "PLAYSCREEN") mode = "PAUSESCREEN";
+    else if (key == 'p' && mode == "PAUSESCREEN") mode = "PLAYSCREEN";
+    else if ((int) key == 27) appendTextToFile("highScore.txt", "High Score is: " + highScore);
   }
   keyPush = true;
 }
