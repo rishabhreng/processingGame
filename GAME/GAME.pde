@@ -13,8 +13,12 @@ ArrayList<Wall> wallArr = new ArrayList<Wall>();
 Coin coin = new Coin(200, 200);
 
 String mode;
-int aiLevel = 2;//level 1 is unpredictable/random movement
-int numEnemies=100;
+int aiLevel = 0;//level 1 is unpredictable/random movement
+//0-engine
+//1-random
+//2-following
+//3-all three
+int numEnemies=50;
 
 boolean keyPush = false;
 

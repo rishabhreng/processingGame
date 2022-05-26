@@ -10,20 +10,33 @@ public class Enemy extends GamePiece {
   }
 
   public void display() {
-    if(aiMode==0) super.display(enemyColor1);
-    if(aiMode==1) super.display(enemyColor2);
-    if(aiMode==2) super.display(enemyColor3);
+    switch(aiLevel) {
+    case 0:
+      super.display(enemyColor1);
+      break;
+    case 1:
+      super.display(enemyColor2);
+      break;
+    case 2:
+      super.display(enemyColor3);
+      break;
+    case 3:
+      if (aiMode==0) super.display(enemyColor1);
+      if (aiMode==1) super.display(enemyColor2);
+      if (aiMode==2) super.display(enemyColor3);
+      break;
+    }
   }
-  
-  public int getMode(){
-   return aiMode; 
+
+  public int getMode() {
+    return aiMode;
   }
 }
 
-void enemyMove(Enemy enemy) {
+void enemyMove(Enemy enemy) {//decides the enemy's motion based on the ai level and the enemy's level
   int deltaX, deltaY;
   int enemyMove;
-  switch(enemy.getMode()) {
+  switch(aiLevel) {
   case 0:
     //AI 1
     deltaX=enemy.getX()-player.getX();
@@ -49,28 +62,75 @@ void enemyMove(Enemy enemy) {
     // AI 2
     //rank each move and do the best one, retracing steps until a move works
     break;
-    case 2:
+  case 2:
     enemyMove=1;
-    switch(keyCode){
-     case UP:
-     enemyMove=2;
-     break;
-     case DOWN:
-     enemyMove=3;
-     break;
-     case LEFT:
-     enemyMove=0;
-     break;
-     case RIGHT:
-     enemyMove=1;
-     break;
+    switch(keyCode) {
+    case UP:
+      enemyMove=2;
+      break;
+    case DOWN:
+      enemyMove=3;
+      break;
+    case LEFT:
+      enemyMove=0;
+      break;
+    case RIGHT:
+      enemyMove=1;
+      break;
     }
     enemyMotions(enemyMove, enemy);
+    break;
+  case 3:
+    switch(enemy.getMode()) {
+    case 0:
+      //AI 1
+      deltaX=enemy.getX()-player.getX();
+      deltaY=enemy.getY()-player.getY();
+      if (abs(deltaX)>abs(deltaY)) {
+        if (deltaX<0) {
+          enemyMove=1;
+        } else {
+          enemyMove=0;
+        }
+      } else {
+        if (deltaY<0) {
+          enemyMove=3;
+        } else {
+          enemyMove=2;
+        }
+      }
+      enemyMotions(enemyMove, enemy);
+      break;
+    case 1:
+      enemyMove=(int) (Math.random()*4);
+      enemyMotions(enemyMove, enemy);
+      // AI 2
+      //rank each move and do the best one, retracing steps until a move works
+      break;
+    case 2:
+      enemyMove=1;
+      switch(keyCode) {
+      case UP:
+        enemyMove=2;
+        break;
+      case DOWN:
+        enemyMove=3;
+        break;
+      case LEFT:
+        enemyMove=0;
+        break;
+      case RIGHT:
+        enemyMove=1;
+        break;
+      }
+      enemyMotions(enemyMove, enemy);
+      break;
+    }
     break;
   }
 }
 
-void enemyMotions(int motion, Enemy enemy) {
+void enemyMotions(int motion, Enemy enemy) {//performs the motions on an enemy
   switch (motion) {
   case 0:
     enemy.move(-20, 0);
