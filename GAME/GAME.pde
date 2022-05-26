@@ -21,9 +21,10 @@ int aiLevel = 0;//level 1 is unpredictable/random movement
 int numEnemies=50;
 
 boolean keyPush = false;
+boolean instructions=true;
 
 SoundFile startScreenSound, loseScreenSound, winScreenSound, moveSound, wallHitSound;
-PImage STARTSCREEN, PAUSESCREEN, SETTINGSCREEN, WINSCREEN, LOSESCREEN, COIN;
+PImage STARTSCREEN, PAUSESCREEN, SETTINGSCREEN, WINSCREEN, LOSESCREEN, COIN, INSTRUCTIONS;
 
 int highScore = 0;
 
@@ -42,7 +43,8 @@ void setup() {
   SETTINGSCREEN = loadImage("SETTINGSCREEN.png");
   WINSCREEN = loadImage("WINSCREEN.png");
   LOSESCREEN = loadImage("LOSESCREEN.png");
-  COIN = loadImage("SmallCoin.png");
+  COIN = loadImage("coin.png");
+  INSTRUCTIONS = loadImage("Instructions.png");
   //sounds
   startScreenSound = new SoundFile(this, "startScreen.wav");
   loseScreenSound = new SoundFile(this, "loseScreen.wav");

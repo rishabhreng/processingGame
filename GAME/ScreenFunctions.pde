@@ -10,45 +10,51 @@ void grid() {
 }
 
 void checkScreen() {
+  if (instructions) {
+    image(INSTRUCTIONS, width/2, height/2);
+    if(frameCount>240){
+     instructions=false; 
+    }
+  } else {
+    switch (mode) {
+    case "STARTSCREEN":
+      startScreen();
+      break;
+    case "PLAYSCREEN":
+      winScreenSoundCount = 0;
+      loseScreenSoundCount = 0;
 
-  switch (mode) {
-  case "STARTSCREEN":
-    startScreen();
-    break;
-  case "PLAYSCREEN":
-    winScreenSoundCount = 0;
-    loseScreenSoundCount = 0;
-
-    playScreen();
-    //check enemy collision
-    for (Enemy enemy : enemies) {
-      if (player.getX() == enemy.getX() && player.getY() == enemy.getY()) {
-        mode = "LOSESCREEN";
-        if (highScore!=0) appendTextToFile("highScore.txt", "High Score is: " + highScore);
-        highScore = 0;
+      playScreen();
+      //check enemy collision
+      for (Enemy enemy : enemies) {
+        if (player.getX() == enemy.getX() && player.getY() == enemy.getY()) {
+          mode = "LOSESCREEN";
+          if (highScore!=0) appendTextToFile("highScore.txt", "High Score is: " + highScore);
+          highScore = 0;
+        }
       }
+      //check coin collision
+      if (player.getX() == coin.getX() && player.getY() == coin.getY()) {
+        mode = "WINSCREEN";
+        highScore++;
+      }
+      break;
+    case "PAUSESCREEN":
+      pauseScreen();
+      break;
+    case "WINSCREEN":
+      winScreen();
+      break;
+    case "LOSESCREEN":
+      loseScreen();
+      break;
+    case "SETTINGSCREEN":
+      settingScreen();
+      break;
+    default:
+      pauseScreen();
+      break;
     }
-    //check coin collision
-    if (player.getX() == coin.getX() && player.getY() == coin.getY()) {
-      mode = "WINSCREEN";
-      highScore++;
-    }
-    break;
-  case "PAUSESCREEN":
-    pauseScreen();
-    break;
-  case "WINSCREEN":
-    winScreen();
-    break;
-  case "LOSESCREEN":
-    loseScreen();
-    break;
-  case "SETTINGSCREEN":
-    settingScreen();
-    break;
-  default:
-    pauseScreen();
-    break;
   }
 }
 
