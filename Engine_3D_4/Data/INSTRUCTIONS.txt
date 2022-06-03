@@ -1,0 +1,3 @@
+To use the graphics engine, start the program as usual, then move the window to the upper left corner of your default screen. Ignore any unexpected behavior this might cause. This is normal.
+When the window is in the corner, make sure to click once more on it and then press the keys "m" and "n" in that order with a short pause between them. This will activate the robot which repositions the mouse and
+then it will calibrate the view motions. To stop the program, either use the "escape" button or press "m" to disable the robot.
